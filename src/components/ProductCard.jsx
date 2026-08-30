@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const ProductCard = ({ image, title, department, oldPrice, newPrice }) => {
+const ProductCard = ({ id, image, title, department, oldPrice, newPrice }) => {
   return (
-    <div className="flex flex-col items-center justify-center p-4 w-full h-full transition-transform hover:scale-105 cursor-pointer">
+    <Link to={`/product/${id}`} className="flex flex-col items-center justify-center p-4 w-full h-full transition-transform hover:scale-105 cursor-pointer">
       <div className="w-[200px] h-[200px] flex items-center justify-center mb-4 bg-white">
         <img src={image} alt={title} className="max-w-full max-h-full object-contain" />
       </div>
@@ -12,7 +13,7 @@ const ProductCard = ({ image, title, department, oldPrice, newPrice }) => {
         <span className="text-[#BDBDBD] font-bold line-through">{oldPrice}</span>
         <span className="text-[#23856D] font-bold">{newPrice}</span>
       </div>
-    </div>
+    </Link>
   );
 };
 

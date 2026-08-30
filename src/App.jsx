@@ -7,6 +7,7 @@ import Footer from './layout/Footer';
 import PageContent from './layout/PageContent';
 import HomePage from './pages/HomePage';
 import ShopPage from './pages/ShopPage';
+import ProductDetailPage from './pages/ProductDetailPage';
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
             </Route>
             <Route path="/shop">
               <ShopPage />
+            </Route>
+            <Route path="/product/:id">
+              <ProductDetailPage />
             </Route>
             {/* Add more routes here */}
           </Switch>
