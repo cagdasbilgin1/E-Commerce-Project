@@ -1,5 +1,4 @@
 import React from 'react';
-import { Facebook, Instagram, Twitter } from 'lucide-react'; // Fallback generic icons since brands are missing, but let's try Globe
 
 // Using random placeholder avatars for members if specific images aren't available locally
 const teamMembers = [
