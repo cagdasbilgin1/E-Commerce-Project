@@ -8,6 +8,7 @@ import PageContent from './layout/PageContent';
 import HomePage from './pages/HomePage';
 import ShopPage from './pages/ShopPage';
 import ProductDetailPage from './pages/ProductDetailPage';
+import ContactPage from './pages/ContactPage';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
             </Route>
             <Route path="/product/:id">
               <ProductDetailPage />
+            </Route>
+            <Route path="/contact">
+              <ContactPage />
             </Route>
             {/* Add more routes here */}
           </Switch>
