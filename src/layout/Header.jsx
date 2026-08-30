@@ -48,7 +48,7 @@ const Header = () => {
       {isMenuOpen && (
         <nav className="flex flex-col items-center gap-6 py-12 bg-white md:hidden text-2xl text-[#737373]">
           <Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link>
-          <Link to="/shop" onClick={() => setIsMenuOpen(false)}>Product</Link>
+          <Link to="/shop" onClick={() => setIsMenuOpen(false)}>Shop</Link>
           <Link to="/about" onClick={() => setIsMenuOpen(false)}>Pricing</Link>
           <Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link>
         </nav>
