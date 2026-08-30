@@ -1,0 +1,59 @@
+{
+	"info": {
+		"_postman_id": "e-commerce-api-123",
+		"name": "E-Commerce Project",
+		"description": "API collection for E-Commerce Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Roles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://workintech-fe-ecommerce.onrender.com/roles",
+					"protocol": "https",
+					"host": [
+						"workintech-fe-ecommerce",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign Up",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane.doe@example.com\",\n  \"password\": \"Password123!\",\n  \"role_id\": \"3\"\n}"
+				},
+				"url": {
+					"raw": "https://workintech-fe-ecommerce.onrender.com/signup",
+					"protocol": "https",
+					"host": [
+						"workintech-fe-ecommerce",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

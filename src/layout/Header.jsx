@@ -33,9 +33,12 @@ const Header = () => {
 
         {/* Desktop Right icons */}
         <div className="hidden md:flex flex-row items-center gap-8 text-[#23A6F0] font-semibold text-sm">
-          <Link to="/login" className="flex items-center gap-2 hover:text-blue-700">
-            <User className="w-4 h-4" /> Login / Register
-          </Link>
+          <div className="flex items-center gap-2">
+             <User className="w-4 h-4" />
+             <Link to="/login" className="hover:text-blue-700">Login</Link>
+             <span>/</span>
+             <Link to="/signup" className="hover:text-blue-700">Register</Link>
+          </div>
           <div className="flex items-center gap-6">
             <button><Search className="w-4 h-4" /></button>
             <button className="flex items-center gap-1"><ShoppingCart className="w-4 h-4" /> 1</button>
