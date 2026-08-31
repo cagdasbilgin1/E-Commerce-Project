@@ -1,17 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import { fetchProducts } from '../store/actions/productActions';
 
 const ShopPage = () => {
   const dispatch = useDispatch();
+  const { categoryId } = useParams();
+  
   const { categories, productList, total, fetchState } = useSelector(state => state.product);
 
+  const [filterText, setFilterText] = useState('');
+  const [sortOption, setSortOption] = useState('');
+  const [appliedFilter, setAppliedFilter] = useState('');
+  const [appliedSort, setAppliedSort] = useState('');
+
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    const params = {};
+    if (categoryId) params.category = categoryId;
+    if (appliedFilter) params.filter = appliedFilter;
+    if (appliedSort) params.sort = appliedSort;
+    
+    dispatch(fetchProducts(params));
+  }, [categoryId, appliedFilter, appliedSort, dispatch]);
+
+  const handleFilterClick = () => {
+    setAppliedFilter(filterText);
+    setAppliedSort(sortOption);
+  };
   
   // Sort by rating descending and get top 5
   const topCategories = [...categories]
@@ -70,8 +87,35 @@ const ShopPage = () => {
           <div className="py-20 text-red-500 font-bold">Failed to load products.</div>
         ) : (
           <>
-            <div className="w-full flex justify-between items-center mb-8">
+            <div className="w-full flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
               <span className="text-[#737373] font-bold">Showing all {total} results</span>
+              
+              <div className="flex flex-col md:flex-row items-center gap-4">
+                <input 
+                  type="text"
+                  placeholder="Search..."
+                  value={filterText}
+                  onChange={e => setFilterText(e.target.value)}
+                  className="border border-[#E8E8E8] rounded p-2 outline-none focus:border-[#23A6F0] text-sm"
+                />
+                <select 
+                  value={sortOption}
+                  onChange={e => setSortOption(e.target.value)}
+                  className="border border-[#E8E8E8] rounded p-2 outline-none focus:border-[#23A6F0] text-sm text-[#737373]"
+                >
+                  <option value="">Sort by...</option>
+                  <option value="price:asc">Price: Low to High</option>
+                  <option value="price:desc">Price: High to Low</option>
+                  <option value="rating:asc">Rating: Low to High</option>
+                  <option value="rating:desc">Rating: High to Low</option>
+                </select>
+                <button 
+                  onClick={handleFilterClick}
+                  className="bg-[#23A6F0] text-white px-6 py-2 rounded font-bold text-sm hover:bg-blue-500 transition"
+                >
+                  Filter
+                </button>
+              </div>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full">

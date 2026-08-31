@@ -31,12 +31,11 @@ export const fetchCategories = () => async (dispatch, getState) => {
   }
 };
 
-export const fetchProducts = () => async (dispatch, getState) => {
+export const fetchProducts = (params = {}) => async (dispatch) => {
   dispatch(setFetchState('FETCHING'));
   
   try {
-    // You can pass limit/offset/filter from state to params here if needed
-    const response = await axiosInstance.get('/products');
+    const response = await axiosInstance.get('/products', { params });
     
     // As per requirement: "set total to Product Reducer" and "set products to Product Reducer"
     dispatch(setTotal(response.data.total));

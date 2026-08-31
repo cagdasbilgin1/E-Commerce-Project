@@ -135,7 +135,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://workintech-fe-ecommerce.onrender.com/products",
+					"raw": "https://workintech-fe-ecommerce.onrender.com/products?category=2&filter=siyah&sort=price:desc",
 					"protocol": "https",
 					"host": [
 						"workintech-fe-ecommerce",
@@ -144,6 +144,20 @@
 					],
 					"path": [
 						"products"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "2"
+						},
+						{
+							"key": "filter",
+							"value": "siyah"
+						},
+						{
+							"key": "sort",
+							"value": "price:desc"
+						}
 					]
 				}
 			},
