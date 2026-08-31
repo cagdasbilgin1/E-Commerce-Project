@@ -13,3 +13,20 @@ export const setFetchState = (fetchState) => ({ type: SET_FETCH_STATE, payload: 
 export const setLimit = (limit) => ({ type: SET_LIMIT, payload: limit });
 export const setOffset = (offset) => ({ type: SET_OFFSET, payload: offset });
 export const setFilter = (filter) => ({ type: SET_FILTER, payload: filter });
+
+import { axiosInstance } from '../../api/axiosInstance';
+
+export const fetchCategories = () => async (dispatch, getState) => {
+  const { categories } = getState().product;
+  if (categories && categories.length > 0) return; // Already fetched
+
+  dispatch(setFetchState('FETCHING'));
+  try {
+    const response = await axiosInstance.get('/categories');
+    dispatch(setCategories(response.data));
+    dispatch(setFetchState('FETCHED'));
+  } catch (error) {
+    console.error('Failed to fetch categories:', error);
+    dispatch(setFetchState('FAILED'));
+  }
+};

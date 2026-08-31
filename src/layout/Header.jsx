@@ -6,6 +6,7 @@ import { Search, ShoppingCart, Menu, Heart, User, ChevronDown } from 'lucide-rea
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const user = useSelector(state => state.client.user);
+  const categories = useSelector(state => state.product.categories);
 
   return (
     <header className="w-full flex flex-col bg-white">
@@ -26,7 +27,38 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex flex-row items-center gap-6 text-sm font-semibold text-[#737373]">
           <Link to="/" className="hover:text-[#23A6F0] text-[#252B42]">Home</Link>
-          <Link to="/shop" className="hover:text-[#23A6F0] flex items-center gap-1">Shop <ChevronDown className="w-4 h-4"/></Link>
+          
+          <div className="relative group">
+            <Link to="/shop" className="hover:text-[#23A6F0] flex items-center gap-1">
+              Shop <ChevronDown className="w-4 h-4"/>
+            </Link>
+            
+            {/* Mega Menu Dropdown */}
+            <div className="absolute top-full left-0 mt-2 w-[300px] bg-white border border-[#E8E8E8] shadow-lg rounded-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 p-6 flex gap-8">
+              {/* Kadın */}
+              <div className="flex flex-col flex-1">
+                <h3 className="font-bold text-[#252B42] mb-4">Kadın</h3>
+                <div className="flex flex-col gap-3">
+                  <Link to="/shop/kadin/bags/1" className="text-sm text-[#737373] font-semibold hover:text-[#23A6F0]">Bags</Link>
+                  <Link to="/shop/kadin/belts/2" className="text-sm text-[#737373] font-semibold hover:text-[#23A6F0]">Belts</Link>
+                  <Link to="/shop/kadin/cosmetics/3" className="text-sm text-[#737373] font-semibold hover:text-[#23A6F0]">Cosmetics</Link>
+                  <Link to="/shop/kadin/hats/4" className="text-sm text-[#737373] font-semibold hover:text-[#23A6F0]">Hats</Link>
+                </div>
+              </div>
+              
+              {/* Erkek */}
+              <div className="flex flex-col flex-1">
+                <h3 className="font-bold text-[#252B42] mb-4">Erkek</h3>
+                <div className="flex flex-col gap-3">
+                  <Link to="/shop/erkek/bags/5" className="text-sm text-[#737373] font-semibold hover:text-[#23A6F0]">Bags</Link>
+                  <Link to="/shop/erkek/belts/6" className="text-sm text-[#737373] font-semibold hover:text-[#23A6F0]">Belts</Link>
+                  <Link to="/shop/erkek/cosmetics/7" className="text-sm text-[#737373] font-semibold hover:text-[#23A6F0]">Cosmetics</Link>
+                  <Link to="/shop/erkek/hats/8" className="text-sm text-[#737373] font-semibold hover:text-[#23A6F0]">Hats</Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <Link to="/about" className="hover:text-[#23A6F0]">About</Link>
           <Link to="/blog" className="hover:text-[#23A6F0]">Blog</Link>
           <Link to="/contact" className="hover:text-[#23A6F0]">Contact</Link>

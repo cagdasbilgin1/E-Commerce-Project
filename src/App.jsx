@@ -15,12 +15,14 @@ import AboutPage from './pages/AboutPage';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
 import { verifyToken } from './store/actions/clientActions';
+import { fetchCategories } from './store/actions/productActions';
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(verifyToken());
+    dispatch(fetchCategories());
   }, [dispatch]);
 
   return (

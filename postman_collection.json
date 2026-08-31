@@ -108,6 +108,26 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://workintech-fe-ecommerce.onrender.com/categories",
+					"protocol": "https",
+					"host": [
+						"workintech-fe-ecommerce",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"categories"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
