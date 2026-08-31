@@ -30,3 +30,21 @@ export const fetchCategories = () => async (dispatch, getState) => {
     dispatch(setFetchState('FAILED'));
   }
 };
+
+export const fetchProducts = () => async (dispatch, getState) => {
+  dispatch(setFetchState('FETCHING'));
+  
+  try {
+    // You can pass limit/offset/filter from state to params here if needed
+    const response = await axiosInstance.get('/products');
+    
+    // As per requirement: "set total to Product Reducer" and "set products to Product Reducer"
+    dispatch(setTotal(response.data.total));
+    dispatch(setProductList(response.data.products));
+    
+    dispatch(setFetchState('FETCHED'));
+  } catch (error) {
+    console.error('Failed to fetch products:', error);
+    dispatch(setFetchState('FAILED'));
+  }
+};

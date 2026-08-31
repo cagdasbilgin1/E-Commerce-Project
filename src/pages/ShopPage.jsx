@@ -1,9 +1,17 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
+import ProductCard from '../components/ProductCard';
+import { fetchProducts } from '../store/actions/productActions';
 
 const ShopPage = () => {
-  const categories = useSelector(state => state.product.categories);
+  const dispatch = useDispatch();
+  const { categories, productList, total, fetchState } = useSelector(state => state.product);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
   
   // Sort by rating descending and get top 5
   const topCategories = [...categories]
@@ -48,6 +56,39 @@ const ShopPage = () => {
             )
           })}
         </div>
+      </section>
+
+
+      {/* Product List Section */}
+      <section className="w-full py-12 px-6 md:px-12 max-w-[1440px] mx-auto flex flex-col items-center">
+        {fetchState === 'FETCHING' ? (
+          <div className="flex flex-col items-center justify-center py-20 text-[#23A6F0]">
+            <Loader2 className="w-12 h-12 animate-spin mb-4" />
+            <p className="font-bold">Loading Products...</p>
+          </div>
+        ) : fetchState === 'FAILED' ? (
+          <div className="py-20 text-red-500 font-bold">Failed to load products.</div>
+        ) : (
+          <>
+            <div className="w-full flex justify-between items-center mb-8">
+              <span className="text-[#737373] font-bold">Showing all {total} results</span>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
+              {productList.map(product => (
+                <ProductCard 
+                  key={product.id}
+                  id={product.id}
+                  image={product.images?.[0]?.url || 'https://via.placeholder.com/200'}
+                  title={product.name}
+                  department={product.description?.substring(0, 30) + '...'}
+                  oldPrice={`$${(product.price * 1.2).toFixed(2)}`}
+                  newPrice={`$${product.price.toFixed(2)}`}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </section>
     </div>
   );
