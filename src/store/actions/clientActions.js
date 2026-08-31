@@ -65,3 +65,33 @@ export const loginUser = (credentials, rememberMe, history) => async (dispatch) 
     throw error;
   }
 };
+
+export const verifyToken = () => async (dispatch) => {
+  const token = localStorage.getItem('token');
+  
+  if (!token) return; // No token, do nothing
+
+  // Put token to axios authorization header
+  axiosInstance.defaults.headers.common['Authorization'] = token;
+
+  try {
+    const response = await axiosInstance.get('/verify');
+    const { token: newToken, ...userData } = response.data;
+
+    // Renew token in localStorage & axios header
+    localStorage.setItem('token', newToken);
+    axiosInstance.defaults.headers.common['Authorization'] = newToken;
+
+    // Hash email for gravatar
+    const emailHash = md5(userData.email.trim().toLowerCase());
+    userData.gravatar = `https://www.gravatar.com/avatar/${emailHash}?d=mp`;
+
+    // Put User object to reducer
+    dispatch(setUser(userData));
+  } catch (error) {
+    // If token is not authorized, delete token from localStorage and axios header
+    localStorage.removeItem('token');
+    delete axiosInstance.defaults.headers.common['Authorization'];
+    console.error('Token verification failed, user logged out.');
+  }
+};

@@ -83,6 +83,31 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Verify Token",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "token_value_here"
+					}
+				],
+				"url": {
+					"raw": "https://workintech-fe-ecommerce.onrender.com/verify",
+					"protocol": "https",
+					"host": [
+						"workintech-fe-ecommerce",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"verify"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
