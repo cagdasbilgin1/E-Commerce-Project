@@ -2,17 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
 import { axiosInstance } from '../api/axiosInstance';
 import { Loader2 } from 'lucide-react';
+import { fetchRoles } from '../store/actions/clientActions';
 
 const SignupPage = () => {
-  const [roles, setRoles] = useState([]);
+  const dispatch = useDispatch();
+  const roles = useSelector(state => state.client.roles);
+  
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
 
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
     defaultValues: {
-      role_id: "" // We will set this dynamically once roles load
+      role_id: "" 
     }
   });
 
@@ -20,24 +24,18 @@ const SignupPage = () => {
   const password = watch('password');
 
   useEffect(() => {
-    axiosInstance.get('/roles')
-      .then(res => {
-        setRoles(res.data);
-        const customerRole = res.data.find(r => r.code === 'customer');
-        if (customerRole) {
-          setValue('role_id', customerRole.id);
-        }
-      })
-      .catch(err => {
-        console.error('Failed to fetch roles', err);
-        // Fallback for demonstration if API fails or blocks
-        setRoles([
-          { id: '1', code: 'admin', name: 'Admin' },
-          { id: '2', code: 'store', name: 'Store' },
-          { id: '3', code: 'customer', name: 'Customer' },
-        ]);
-      });
-  }, []);
+    dispatch(fetchRoles());
+  }, [dispatch]);
+
+  // Set default role once roles are populated
+  useEffect(() => {
+    if (roles && roles.length > 0 && !selectedRoleId) {
+       const customerRole = roles.find(r => r.code === 'customer');
+       if (customerRole) {
+         setValue('role_id', customerRole.id);
+       }
+    }
+  }, [roles, selectedRoleId, setValue]);
 
   const onSubmit = (data) => {
     setIsLoading(true);
