@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Search, ShoppingCart, Menu, Heart, User, ChevronDown } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const user = useSelector(state => state.client.user);
 
   return (
     <header className="w-full flex flex-col bg-white">
@@ -33,12 +35,19 @@ const Header = () => {
 
         {/* Desktop Right icons */}
         <div className="hidden md:flex flex-row items-center gap-8 text-[#23A6F0] font-semibold text-sm">
-          <div className="flex items-center gap-2">
-             <User className="w-4 h-4" />
-             <Link to="/login" className="hover:text-blue-700">Login</Link>
-             <span>/</span>
-             <Link to="/signup" className="hover:text-blue-700">Register</Link>
-          </div>
+          {user?.name ? (
+            <div className="flex items-center gap-2">
+              <img src={user.gravatar || `https://ui-avatars.com/api/?name=${user.name}`} alt={user.name} className="w-8 h-8 rounded-full" />
+              <span className="text-[#252B42] font-bold">{user.name}</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+               <User className="w-4 h-4" />
+               <Link to="/login" className="hover:text-blue-700">Login</Link>
+               <span>/</span>
+               <Link to="/signup" className="hover:text-blue-700">Register</Link>
+            </div>
+          )}
           <div className="flex items-center gap-6">
             <button><Search className="w-4 h-4" /></button>
             <button className="flex items-center gap-1"><ShoppingCart className="w-4 h-4" /> 1</button>
